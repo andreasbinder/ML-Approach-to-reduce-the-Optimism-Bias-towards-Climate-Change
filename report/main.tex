@@ -1,0 +1,60 @@
+%%%%%%%%%%%%%%%%%%
+%  placeholders  %
+%%%%%%%%%%%%%%%%%%
+\documentclass[9pt,book]{IEEEtran}
+
+
+\newcommand{\uni}{Technical University of Munich}
+\newcommand{\department}{TUM Department of Informatics}
+\newcommand{\chair}{Chair for Applied Software Engineering}
+\newcommand{\city}{Munich}
+\newcommand{\country}{Germany}
+
+% TODO: Replace with your information
+\title{ML-Approach to reduce the Optimism Bias towards Climate Change}
+\newcommand{\authorname}{Andreas Binder}
+\newcommand{\email}{andreasjosef.binder@tum.de}
+
+\input{settings}
+    
+\begin{document}
+
+\author{
+	\IEEEauthorblockN{\authorname}\\
+	\IEEEauthorblockA{\textit{\department, \chair} \\
+	\textit{\uni}\\
+	\city, \country \\
+	\email}}
+
+\maketitle
+
+\begin{abstract}
+\input{0_Abstract}
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%  General Information  %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Keep the slides from the Kick-Off Meeting in mind.
+% The goal of the seminar is to take a look at applications of machine learning in real world scenarios or with real world applications.
+% We want to take theoretical concepts and new approaches and apply them to existing or emerging problems.
+% It is important that you document your process, collect citations, the process how you got to the results is as valuable as the end result.
+% The seminar be about 6 pages (+ bibliography) long. It should summarize your literature research and related work.
+% - Related practical work e.g. frameworks, tools, applications
+% - Related academic literature such as papers and books
+% - Showcases your proposed solution and prototype
+% - Describe the implementation, challenges, and interesting technical details
+% - Showcase why your prototype is a relevant for consumers or research
+% - Details possible future work
+
+\input{1_Introduction}
+\input{2_RelatedWork}
+\input{3_Contributions}
+\input{4_Results}
+\input{5_Conclusion}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

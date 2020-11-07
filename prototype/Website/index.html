@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<meta charset="utf-8"/>
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet">
+
+        <title> GAN </title>
+
+        <style>
+            * {
+                font-family: Rubik, sans;
+                box-sizing: border-box;
+                user-select: none;
+            }
+
+            html, body {
+                padding: 0;
+                margin: 0;
+                position: absolute;
+                height: 100%;
+                width: 100%;
+            }
+
+            .header {
+                text-align: center;
+                margin: 0;
+                padding: 250px 0;
+                background-color: #999999;
+                box-shadow: inset 0 0 100px 10px rgba(0, 0, 0, 0.20);
+                background-size: cover;
+
+            }
+
+            .header span {
+                font-size: 30px;
+                padding: 10px 30px;
+                text-align: center;
+                color: #f0f0f0;
+                background-color: rgba(0, 0, 0, .5);
+            }
+
+            .controls {
+                width: 100%;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .grid {
+                padding: 30px;
+                width: 100%;
+                display: grid;
+                grid-gap: 20px;
+                grid-template-columns: repeat(5, 1fr);
+                justify-items: center;
+            }
+
+            .grid a {
+                background-color: #8f8f8f;
+                border: 1px solid #454545;
+                box-shadow: inset 0 0 1000px 1px rgba(0, 0, 0, 0.2);
+                border-radius: 5px;
+                padding: 10px;
+            }
+
+            
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <span>House Simulator using GANs</span>
+    
+            <div class="controls">
+                <input class="amount" placeholder="Amount" min=="1" max="100" type="number">
+                <button type="button" class="prediction" onclick="generate()">Generate Picture</button>
+            </div> 
+        </div>
+
+        <div class="canvas-wrapper grid"> </div>
+    </body>
+    <script type="text/javascript">
+        const wrapper = document.querySelector('.canvas-wrapper');
+        const button = document.querySelector('.prediction');
+        const header = document.querySelector('.header');
+        const input = document.querySelector('.amount');
+        let model;
+
+
+        async function geheim() {
+                const noise = tf.randomNormal([1, 64]);
+                const result = model.predict(noise.reshape([1,64]));
+
+                let res = result.squeeze();
+
+                res = res.div(tf.scalar(2));
+                res = res.add(tf.scalar(0.5));
+
+                const canvas = document.createElement('canvas');
+
+                canvas.style.height = '200px';
+                canvas.style.width = '200px';
+
+                await tf.browser.toPixels(res, canvas);
+
+
+                header.style.backgroundImage = 'url(data:' + canvas.toDataURL() + ')';
+        }
+
+
+        async function load() {
+            model = await tf.loadLayersModel('./TFjsModel/model.json');
+            button.removeAttribute('disabled');
+            button.innerText = 'generate';
+            geheim();
+        }
+
+
+        async function generate(){
+            wrapper.innerHTML = '';
+            const turns = Math.max(1, parseInt(input.value, 10));
+
+            for (let i = 0; i < turns; i++) {
+                const noise = tf.randomNormal([1, 64]);
+                const result = model.predict(noise.reshape([1,64]));
+
+                let res = result.squeeze();
+
+                res = res.div(tf.scalar(2));
+                res = res.add(tf.scalar(0.5));
+
+                const canvas = document.createElement('canvas');
+                const a = document.createElement('a');
+
+                canvas.style.height = '200px';
+                canvas.style.width = '200px';
+                canvas.style.border = '1px solid #000000;';
+
+                await tf.browser.toPixels(res, canvas);
+
+                a.href = canvas.toDataURL();
+                a.download = 'generated-image-' + i + '.png';
+                a.target = '_blank';
+
+                a.appendChild(canvas);
+                wrapper.appendChild(a);
+
+                window.scrollTo(0,document.body.scrollHeight);
+            }
+        }
+
+
+        button.innerText = 'loading...';
+        button.disabled = 'true';
+        load();
+    </script>
+</html>
