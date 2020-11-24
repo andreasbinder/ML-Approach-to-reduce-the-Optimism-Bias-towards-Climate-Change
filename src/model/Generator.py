@@ -3,8 +3,6 @@ import numpy as np
 from keras.layers import BatchNormalization, Input, Dense, Reshape, Flatten, Dropout
 from keras.layers.advanced_activations import LeakyReLU
 from keras.models import Sequential, Model, load_model
-from keras.optimizers import Adam
-import os
 from keras import regularizers
 
 def build_generator(latent_dim: int, shapeOfImages):

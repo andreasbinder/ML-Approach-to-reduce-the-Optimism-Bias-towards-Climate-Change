@@ -1,15 +1,16 @@
 # imports
 import numpy as np
-from keras.layers import BatchNormalization, Input, Dense, Reshape, Flatten, Dropout
-from keras.models import Model, load_model
-from keras.optimizers import Adam
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model, load_model
+from tensorflow.keras.optimizers import Adam
 import os
-from keras_preprocessing import image
-from Scripts.ImageToNumpy import imageToNumpy
+
+from src.scripts.ImageToNumpy import imageToNumpy
+from src.scripts.JudgePerformance import judgePerformance
+from src.scripts.SaveDuringTraining import saveDuringTraining
 from Model.Discriminator import build_discriminator
 from Model.Generator import build_generator
-from Scripts.JudgePerformance import judgePerformance
-from Scripts.SaveDuringTraining import saveDuringTraining
+
 
 # global definitions
 firstdim, seconddim, thirddim = 64, 64, 3
